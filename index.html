@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kopi Nyaman - Coffee Shop</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Animasi untuk tombol */
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        .pulse:hover {
+            animation: pulse 1s infinite;
+        }
+        
+        /* Efek untuk kartu menu */
+        .menu-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        
+        .menu-card {
+            transition: all 0.3s ease;
+        }
+        
+        /* Loading spinner */
+        .loader {
+            border-top-color: #6B46C1;
+            animation: spinner 1s linear infinite;
+        }
+        
+        @keyframes spinner {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 640px) {
+            .mobile-stack {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 font-sans">
+    <!-- Navigation -->
+    <nav class="bg-purple-900 text-white shadow-lg">
+        <div class="container mx-auto px-4 py-3">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center space-x-2">
+                    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/04d5572d-b465-4506-8eea-a19e22918b02.png" alt="Logo Kopi Nyaman" class="rounded-full">
+                    <h1 class="text-xl font-bold">Kopi Nyaman</h1>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#beranda" class="hover:text-purple-200">Beranda</a>
+                    <a href="#menu" class="hover:text-purple-200">Menu</a>
+                    <a href="#pesan" class="hover:text-purple-200">Pesan</a>
+                    <a href="#tentang" class="hover:text-purple-200">Tentang Kami</a>
+                </div>
+                <button class="md:hidden flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="beranda" class="relative bg-purple-800 text-white py-20">
+        <div class="container mx-auto px-4 text-center">
+            <h1 class="text-4xl md:text-5xl font-bold mb-4">Selamat Datang di Kopi Nyaman</h1>
+            <p class="text-xl mb-8">Nikmati berbagai racikan kopi spesial dengan suasana yang nyaman</p>
+            <a href="#menu" class="bg-white text-purple-800 px-6 py-3 rounded-full font-semibold hover:bg-purple-100 transition duration-300 inline-block pulse">
+                Lihat Menu
+            </a>
+        </div>
+        <div class="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-gray-50 to-transparent"></div>
+    </section>
+
+    <!-- Menu Section -->
+    <section id="menu" class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-12 text-gray-800">Menu Minuman</h2>
+            <h2 class="text-3xl font-bold text-center mb-12 text-gray-800">Menu Snack</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Item Menu 1 -->
+                <div class="bg-white rounded-lg overflow-hidden shadow-md menu-card">
+                    <div class="relative h-48 overflow-hidden">
+                        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/a8fad3bf-fca9-4995-b03c-3a84968ce3b1.png" alt="Espresso hitam pekat dalam cangkir kecil dengan busa kecoklatan di pinggir" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2 text-gray-800">Espresso</h3>
+                        <p class="text-gray-600 mb-4">Kopi murni tanpa campuran, disajikan panas dalam cangkir kecil.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-purple-800 font-bold">Rp 18.000</span>
+                            <button onclick="addToCart('Espresso', 18000, 'https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/adc743c3-8287-4004-99f9-1cbbd5d7fccd.png')" class="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700 transition duration-300">
+                                Pesan
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Item Menu 2 -->
+                <div class="bg-white rounded-lg overflow-hidden shadow-md menu-card">
+                    <div class="relative h-48 overflow-hidden">
+                        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/9358a8fd-8987-4d72-bfa9-d9a94c562d1e.png" alt="Latte dengan seni latte berbentuk hati di atas busa susu putih" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2 text-gray-800">Caffè Latte</h3>
+                        <p class="text-gray-600 mb-4">Espresso dengan tambahan susu steamed dan sedikit busa di atasnya.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-purple-800 font-bold">Rp 25.000</span>
+                            <button onclick="addToCart('Caffè Latte', 25000, 'https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/0b88710d-0fbe-4773-8714-7ee43c6df234.png')" class="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700 transition duration-300">
+                                Pesan
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Item Menu 3 -->
+                <div class="bg-white rounded-lg overflow-hidden shadow-md menu-card">
+                    <div class="relative h-48 overflow-hidden">
+                        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/3167578b-9528-4def-b6e7-1d114134c575.png" alt="Cappuccino dengan topping bubuk coklat dan busa tebal" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2 text-gray-800">Cappuccino</h3>
+                        <p class="text-gray-600 mb-4">Espresso dengan busa susu lebih banyak dan taburan bubuk coklat.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-purple-800 font-bold">Rp 23.000</span>
+                            <button onclick="addToCart('Cappuccino', 23000, 'https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/2a2935b4-1226-41c8-a28d-58ee035f660b.png')" class="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700 transition duration-300">
+                                Pesan
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Item Menu 4 -->
+                <div class="bg-white rounded-lg overflow-hidden shadow-md menu-card">
+                    <div class="relative h-48 overflow-hidden">
+                        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/e7cb3609-62e3-4a5b-a13f-eab8036ab2fb.png" alt="Americano dalam cangkir besar dengan warna coklat sedang" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2 text-gray-800">Americano</h3>
+                        <p class="text-gray-600 mb-4">Espresso dengan tambahan air panas, memberikan rasa yang lebih ringan.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-purple-800 font-bold">Rp 20.000</span>
+                            <button onclick="addToCart('Americano', 20000, 'https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/ba75bc6d-e409-426b-a86e-7cfc04ee1860.png')" class="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700 transition duration-300">
+                                Pesan
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Item Menu 5 -->
+                <div class="bg-white rounded-lg overflow-hidden shadow-md menu-card">
+                    <div class="relative h-48 overflow-hidden">
+                        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/e85e5ce6-0f01-40c6-bda9-62613b9f6095.png" alt="Mocha dengan whipped cream dan siraman coklat di atasnya" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2 text-gray-800">Mocha</h3>
+                        <p class="text-gray-600 mb-4">Campuran espresso, susu, dan coklat dengan whipped cream di atasnya.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-purple-800 font-bold">Rp 28.000</span>
+                            <button onclick="addToCart('Mocha', 28000, 'https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/6ce78c45-631d-4731-ba54-c7fe616cfcd8.png')" class="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700 transition duration-300">
+                                Pesan
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                
+            <!-- Item Snack 1 -->
+                <div class="bg-white rounded-lg overflow-hidden shadow-md menu-card">
+                    <div class="relative h-48 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1551504734-5ee1c4a1479b?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&h=400&q=80" alt="Croissant segar dengan tekstur berlapis dan warna coklat keemasan" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2 text-gray-800">Croissant</h3>
+                        <p class="text-gray-600 mb-4">Kue pastri Prancis berlapis dengan tekstur renyah di luar dan lembut di dalam.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-purple-800 font-bold">Rp 25.000</span>
+                            <button onclick="addToCart('Croissant', 25000, 'https://images.unsplash.com/photo-1551504734-5ee1c4a1479b?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&h=400&q=80')" class="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700 transition duration-300">
+                                Pesan
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Item Snack 3 -->
+                <div class="bg-white rounded-lg overflow-hidden shadow-md menu-card">
+                    <div class="relative h-48 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1601050690597-df0568f70950?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&h=400&q=80" alt="Cheesecake lembut dengan topping buah segar" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2 text-gray-800">Cheesecake</h3>
+                        <p class="text-gray-600 mb-4">Kue keju lembut dengan tekstur creamy dan topping buah segar.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-purple-800 font-bold">Rp 35.000</span>
+                            <button onclick="addToCart('Cheesecake', 35000, 'https://images.unsplash.com/photo-1601050690597-df0568f70950?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&h=400&q=80')" class="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700 transition duration-300">
+                                Pesan
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Order Section -->
+    <section id="pesan" class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-8 text-gray-800">Pesanan Anda</h2>
+            
+            <div class="max-w-4xl mx-auto bg-gray-100 rounded-lg p-6">
+                <div id="cart-container" class="mb-6">
+                    <div class="hidden" id="empty-cart-message">
+                        <div class="text-center py-10">
+                            <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/1f0d4ed6-a8a3-409c-aa82-5745f860d32d.png" alt="Keranjang belanja kosong dengan ikon kartun sedih" class="mx-auto mb-4">
+                            <h3 class="text-xl font-semibold text-gray-700">Keranjang Anda Kosong</h3>
+                            <p class="text-gray-500">Silakan pilih menu dari daftar di atas</p>
+                        </div>
+                    </div>
+                    
+                    <table class="w-full hidden" id="cart-table">
+                        <thead>
+                            <tr class="border-b">
+                                <th class="text-left py-3 px-4">Produk</th>
+                                <th class="text-center py-3 px-4">Harga</th>
+                                <th class="text-center py-3 px-4">Jumlah</th>
+                                <th class="text-center py-3 px-4">Subtotal</th>
+                                <th class="text-center py-3 px-4">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="cart-items">
+                            <!-- Items will be added here dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6">
+                    <button onclick="clearCart()" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 transition duration-300 mb-4 md:mb-0">
+                        Kosongkan Keranjang
+                    </button>
+                    
+                    <div class="text-right">
+                        <div class="text-lg mb-2">
+                            <span>Total: </span>
+                            <span id="total-price" class="font-bold text-purple-800">Rp 0</span>
+                        </div>
+                        <button onclick="showPaymentForm()" id="checkout-btn" class="bg-purple-600 text-white px-6 py-3 rounded hover:bg-purple-700 transition duration-300 hidden">
+                            Lanjutkan Pembayaran
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Payment Form -->
+                <div id="payment-form" class="hidden mt-8 bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="text-xl font-semibold mb-4 text-gray-800">Form Pembayaran</h3>
+                    
+                    <div class="mb-4">
+                        <label class="block text-gray-700 mb-2">Metode Pembayaran</label>
+                        <div class="flex space-x-4">
+                            <label class="flex items-center">
+                                <input type="radio" name="payment-method" value="cash" checked class="mr-2">
+                                <span>Tunai</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="radio" name="payment-method" value="card" class="mr-2">
+                                <span>Kartu Kredit/Debit</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="radio" name="payment-method" value="ewallet" class="mr-2">
+                                <span>E-Wallet</span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div id="cash-details" class="mb-4">
+                        <div class="mb-4">
+                            <label class="block text-gray-700 mb-2">Nominal Pembayaran (Rp)</label>
+                            <input type="number" id="cash-amount" class="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-purple-600">
+                        </div>
+                    </div>
+                    
+                    <div id="non-cash-details" class="hidden mb-4">
+                        <div class="mb-4">
+                            <label class="block text-gray-700 mb-2">Nomor Kartu/E-Wallet</label>
+                            <input type="text" id="card-number" placeholder="1234 5678 9012 3456" class="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-purple-600">
+                        </div>
+                    </div>
+                    
+                    <div class="flex justify-end space-x-4">
+                        <button onclick="hidePaymentForm()" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 transition duration-300">
+                            Kembali
+                        </button>
+                        <button onclick="processPayment()" class="bg-purple-600 text-white px-6 py-2 rounded hover:bg-purple-700 transition duration-300">
+                            Bayar
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Payment Confirmation -->
+                <div id="payment-confirmation" class="hidden mt-8 bg-white p-6 rounded-lg shadow-md text-center">
+                    <div class="mb-6">
+                        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/a7b38c09-b824-45ac-8dd6-2c7386593814.png" alt="Icon centang hijau dengan latar putih menunjukkan pembayaran berhasil" class="mx-auto">
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2 text-gray-800">Pembayaran Berhasil!</h3>
+                    <p class="text-gray-600 mb-4">Terima kasih telah berbelanja di Kopi Nyaman</p>
+                    <div class="mb-4">
+                        <div class="flex justify-center mb-2">
+                            <span class="font-semibold">Total Pembayaran:</span>
+                            <span id="confirm-total" class="ml-2 text-purple-800"></span>
+                        </div>
+                        <div class="flex justify-center mb-2">
+                            <span class="font-semibold">Kembalian:</span>
+                            <span id="change-amount" class="ml-2 text-purple-800"></span>
+                        </div>
+                    </div>
+                    <button onclick="resetOrder()" class="bg-purple-600 text-white px-6 py-2 rounded hover:bg-purple-700 transition duration-300">
+                        Buat Pesanan Baru
+                    </button>
+                </div>
+                
+                <!-- Return Form -->
+                <div id="return-form" class="hidden mt-8 bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="text-xl font-semibold mb-4 text-gray-800">Form Pengembalian</h3>
+                    
+                    <div class="mb-4">
+                        <label class="block text-gray-700 mb-2">Alasan Pengembalian</label>
+                        <select id="return-reason" class="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-purple-600">
+                            <option value="wrong-item">Item salah</option>
+                            <option value="damaged">Produk rusak</option>
+                            <option value="not-as-described">Tidak sesuai deskripsi</option>
+                            <option value="other">Lainnya</option>
+                        </select>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label class="block text-gray-700 mb-2">Catatan Tambahan</label>
+                        <textarea id="return-notes" class="w-full px-4 py-2 border rounded h-24 focus:outline-none focus:ring-2 focus:ring-purple-600"></textarea>
+                    </div>
+                    
+                    <div class="flex justify-end space-x-4">
+                        <button onclick="hideReturnForm()" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 transition duration-300">
+                            Batalkan
+                        </button>
+                        <button onclick="processReturn()" class="bg-red-600 text-white px-6 py-2 rounded hover:bg-red-700 transition duration-300">
+                            Ajukan Pengembalian
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Return Confirmation -->
+                <div id="return-confirmation" class="hidden mt-8 bg-white p-6 rounded-lg shadow-md text-center">
+                    <div class="mb-6">
+                        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/79128f5d-6005-401a-a98d-a9bdc965d66a.png" alt="Icon pengembalian berwarna merah dengan latar putih menunjukkan proses pengembalian berhasil" class="mx-auto">
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2 text-gray-800">Pengembalian Diproses!</h3>
+                    <p class="text-gray-600 mb-4">Kami telah menerima permintaan pengembalian Anda.</p>
+                    <div class="mb-4">
+                        <div class="flex justify-center mb-2">
+                            <span class="font-semibold">Total Pengembalian:</span>
+                            <span id="return-amount" class="ml-2 text-purple-800"></span>
+                        </div>
+                    </div>
+                    <button onclick="resetOrder()" class="bg-purple-600 text-white px-6 py-2 rounded hover:bg-purple-700 transition duration-300">
+                        Tutup
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="tentang" class="py-16 bg-gray-100">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 mb-8 md:mb-0">
+                    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/1e491ba7-cf72-4040-be67-3d29ec94b2e3.png" alt="Interior coffee shop yang nyaman dengan meja kayu dan tanaman hias" class="rounded-lg shadow-md w-full">
+                </div>
+                <div class="md:w-1/2 md:pl-12">
+                    <h2 class="text-3xl font-bold mb-6 text-gray-800">Tentang Kopi Nyaman</h2>
+                    <p class="text-gray-600 mb-4">Kopi Nyaman berdiri sejak 2020 dengan misi memberikan pengalaman ngopi yang menyenangkan dan nyaman untuk semua pecinta kopi. Kami hanya menggunakan biji kopi pilihan dari petani lokal yang diolah dengan teknik penyangraian khusus.</p>
+                    <p class="text-gray-600 mb-6">Tidak hanya kopi, kami juga menyediakan berbagai minuman lainnya yang cocok menemani hari-hari Anda.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-purple-800 hover:text-purple-600">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M22.675 0h-21.35c-.732 0-1.325.593-1.325 1.325v21.351c0 .731.593 1.324 1.325 1.324h11.495v-9.294h-3.128v-3.622h3.128v-2.671c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12v9.293h6.116c.73 0 1.323-.593 1.323-1.325v-21.35c0-.732-.593-1.325-1.325-1.325z"/>
+                            </svg>
+                        </a>
+                        <a href="#" class="text-purple-800 hover:text-purple-600">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                            </svg>
+                        </a>
+                        <a href="#" class="text-purple-800 hover:text-purple-600">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-purple-900 text-white py-8">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-4 md:mb-0">
+                    <div class="flex items-center space-x-2">
+                        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/54d82583-c594-465d-9075-9dde5f216c81.png" alt="Logo Kopi Nyaman" class="rounded-full">
+                        <h3 class="text-xl font-bold">Kopi Nyaman</h3>
+                    </div>
+                    <p class="mt-2 text-purple-200">Nikmatnya Kopi, Nyamannya Tempat</p>
+                </div>
+                <div class="flex flex-col md:flex-row md:space-x-8 space-y-4 md:space-y-0">
+                    <div>
+                        <h4 class="font-semibold mb-2">Jam Operasional</h4>
+                        <p class="text-purple-200">Senin-Minggu <br>08:00 - 22:00 WIB</p>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold mb-2">Hubungi Kami</h4>
+                        <p class="text-purple-200">Jl. Kopi Nyaman No. 123<br>info@kopinyaman.com</p>
+                    </div>
+                    <div>
+                        <button onclick="showReturnForm()" class="bg-transparent border border-purple-300 text-purple-300 px-4 py-2 rounded hover:bg-purple-800 transition duration-300">
+                            Proses Pengembalian
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-purple-800 mt-8 pt-6 text-center text-purple-300">
+                <p>© 2023 Kopi Nyaman. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // Data keranjang
+        let cart = [];
+        
+        // Fungsi untuk menambah item ke keranjang
+        function addToCart(name, price, image) {
+            // Cek apakah item sudah ada di keranjang
+            const existingItem = cart.find(item => item.name === name);
+            
+            if (existingItem) {
+                existingItem.quantity += 1;
+                existingItem.subtotal = existingItem.quantity * existingItem.price;
+            } else {
+                cart.push({
+                    name: name,
+                    price: price,
+                    image: image,
+                    quantity: 1,
+                    subtotal: price
+                });
+            }
+            
+            updateCartDisplay();
+        }
+        
+        // Fungsi untuk menghapus item dari keranjang
+        function removeItemFromCart(index) {
+            cart.splice(index, 1);
+            updateCartDisplay();
+        }
+        
+        // Fungsi untuk mengupdate jumlah item di keranjang
+        function updateQuantity(index, newQuantity) {
+            if (newQuantity < 1) return;
+            
+            cart[index].quantity = parseInt(newQuantity);
+            cart[index].subtotal = cart[index].quantity * cart[index].price;
+            updateCartDisplay();
+        }
+        
+        // Fungsi untuk membersihkan keranjang
+        function clearCart() {
+            cart = [];
+            updateCartDisplay();
+        }
+        
+        // Fungsi untuk menampilkan tampilan keranjang
+        function updateCartDisplay() {
+            const cartItemsEl = document.getElementById('cart-items');
+            const cartTableEl = document.getElementById('cart-table');
+            const emptyCartMessageEl = document.getElementById('empty-cart-message');
+            const totalPriceEl = document.getElementById('total-price');
+            const checkoutBtn = document.getElementById('checkout-btn');
+            
+            // Hitung total harga
+            const total = cart.reduce((sum, item) => sum + item.subtotal, 0);
+            
+            if (cart.length === 0) {
+                cartTableEl.classList.add('hidden');
+                emptyCartMessageEl.classList.remove('hidden');
+                checkoutBtn.classList.add('hidden');
+            } else {
+                cartTableEl.classList.remove('hidden');
+                emptyCartMessageEl.classList.add('hidden');
+                checkoutBtn.classList.remove('hidden');
+                
+                // Kosongkan cart items
+                cartItemsEl.innerHTML = '';
+                
+                // Tambahkan setiap item ke keranjang
+                cart.forEach((item, index) => {
+                    const row = document.createElement('tr');
+                    row.className = 'border-b';
+                    
+                    row.innerHTML = `
+                        <td class="py-4 px-4 flex items-center">
+                            <img src="${item.image}" alt="${item.name}" class="w-16 h-16 object-cover rounded mr-4">
+                            <span>${item.name}</span>
+                        </td>
+                        <td class="py-4 px-4 text-center">Rp ${item.price.toLocaleString('id-ID')}</td>
+                        <td class="py-4 px-4 text-center">
+                            <input type="number" min="1" value="${item.quantity}" 
+                                   onchange="updateQuantity(${index}, this.value)" 
+                                   class="w-16 text-center px-2 py-1 border rounded">
+                        </td>
+                        <td class="py-4 px-4 text-center">Rp ${item.subtotal.toLocaleString('id-ID')}</td>
+                        <td class="py-4 px-4 text-center">
+                            <button onclick="removeItemFromCart(${index})" class="text-red-600 hover:text-red-800">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                </svg>
+                            </button>
+                        </td>
+                    `;
+                    
+                    cartItemsEl.appendChild(row);
+                });
+            }
+            
+            // Update total harga
+            totalPriceEl.textContent = `Rp ${total.toLocaleString('id-ID')}`;
+        }
+        
+        // Fungsi untuk menampilkan form pembayaran
+        function showPaymentForm() {
+            document.getElementById('payment-form').classList.remove('hidden');
+            document.getElementById('cart-container').classList.add('hidden');
+            
+            // Setup metode pembayaran default tunai
+            setupPaymentMethod('cash');
+        }
+        
+        // Fungsi untuk menyembunyikan form pembayaran
+        function hidePaymentForm() {
+            document.getElementById('payment-form').classList.add('hidden');
+            document.getElementById('cart-container').classList.remove('hidden');
+        }
+        
+        // Fungsi untuk menangani perubahan metode pembayaran
+        function setupPaymentMethods() {
+            const paymentMethods = document.getElementsByName('payment-method');
+            
+            paymentMethods.forEach(method => {
+                method.addEventListener('change', function() {
+                    setupPaymentMethod(this.value);
+                });
+            });
+        }
+        
+        // Fungsi untuk setup tampilan metode pembayaran yang dipilih
+        function setupPaymentMethod(method) {
+            const cashDetails = document.getElementById('cash-details');
+            const nonCashDetails = document.getElementById('non-cash-details');
+            
+            if (method === 'cash') {
+                cashDetails.classList.remove('hidden');
+                nonCashDetails.classList.add('hidden');
+            } else {
+                cashDetails.classList.add('hidden');
+                nonCashDetails.classList.remove('hidden');
+            }
+        }
+        
+        // Fungsi untuk memproses pembayaran
+        function processPayment() {
+            const total = cart.reduce((sum, item) => sum + item.subtotal, 0);
+            const paymentMethod = document.querySelector('input[name="payment-method"]:checked').value;
+            
+            if (paymentMethod === 'cash') {
+                const cashAmount = parseInt(document.getElementById('cash-amount').value);
+                
+                if (isNaN(cashAmount) || cashAmount < total) {
+                    alert('Nominal pembayaran tunai tidak boleh kurang dari total belanja');
+                    return;
+                }
+                
+                const change = cashAmount - total;
+                
+                document.getElementById('confirm-total').textContent = `Rp ${total.toLocaleString('id-ID')}`;
+                document.getElementById('change-amount').textContent = `Rp ${change.toLocaleString('id-ID')}`;
+            } else {
+                const cardNumber = document.getElementById('card-number').value;
+                
+                if (!cardNumber) {
+                    alert('Silakan masukkan nomor kartu/e-wallet');
+                    return;
+                }
+                
+                document.getElementById('confirm-total').textContent = `Rp ${total.toLocaleString('id-ID')}`;
+                document.getElementById('change-amount').textContent = '-';
+            }
+            
+            document.getElementById('payment-form').classList.add('hidden');
+            document.getElementById('payment-confirmation').classList.remove('hidden');
+        }
+        
+        // Fungsi untuk menampilkan form pengembalian
+        function showReturnForm() {
+            document.getElementById('return-form').classList.remove('hidden');
+            document.getElementById('cart-container').classList.add('hidden');
+        }
+        
+        // Fungsi untuk menyembunyikan form pengembalian
+        function hideReturnForm() {
+            document.getElementById('return-form').classList.add('hidden');
+            document.getElementById('cart-container').classList.remove('hidden');
+        }
+        
+        // Fungsi untuk memproses pengembalian
+        function processReturn() {
+            const total = cart.reduce((sum, item) => sum + item.subtotal, 0);
+            document.getElementById('return-amount').textContent = `Rp ${total.toLocaleString('id-ID')}`;
+            
+            document.getElementById('return-form').classList.add('hidden');
+            document.getElementById('return-confirmation').classList.remove('hidden');
+        }
+        
+        // Fungsi untuk reset pesanan setelah selesai
+        function resetOrder() {
+            cart = [];
+            updateCartDisplay();
+            
+            document.getElementById('payment-confirmation').classList.add('hidden');
+            document.getElementById('return-confirmation').classList.add('hidden');
+            document.getElementById('cart-container').classList.remove('hidden');
+            
+            // Reset form
+            document.getElementById('cash-amount').value = '';
+            document.getElementById('card-number').value = '';
+            document.getElementById('return-reason').value = 'wrong-item';
+            document.getElementById('return-notes').value = '';
+        }
+        
+        // Inisialisasi saat halaman dimuat
+        document.addEventListener('DOMContentLoaded', function() {
+            updateCartDisplay();
+            setupPaymentMethods();
+            
+            // Setup default payment method
+            setupPaymentMethod('cash');
+        });
+    </script>
+</body>
+</html>
